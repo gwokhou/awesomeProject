@@ -28,20 +28,26 @@ func TestPerimeter(t *testing.T) {
 }
 
 func TestArea(t *testing.T) {
+
 	// 创建匿名结构体，声明匿名结构体切片
 	areaTestCases := []struct {
-		shape Shape
-		want  float64
+		name    string
+		shape   Shape
+		hasArea float64
 	}{
-		{shape: Rectangle{12, 6}, want: 72.0},
-		{shape: Circle{10}, want: 314.1592653589793},
-		{shape: Triangle{12, 6}, want: 36.0},
+		{name: "Rectangle", shape: Rectangle{Width: 12, Height: 6}, hasArea: 72.0},
+		{name: "Circle", shape: Circle{Radius: 10}, hasArea: 314.1592653589793},
+		{name: "Triangle", shape: Triangle{Base: 12, Height: 6}, hasArea: 36.0},
 	}
 
+	// 每个testCase作为一个子测试，明确testCase的名称和值。
+	// “当测试用例不是一系列操作，而是事实的断言时，测试才清晰明了。”
 	for _, testCase := range areaTestCases {
-		got := testCase.shape.Area()
-		if got != testCase.want {
-			t.Errorf("got %.2f want %.2f", got, testCase.want)
-		}
+		t.Run(testCase.name, func(t *testing.T) {
+			got := testCase.shape.Area()
+			if got != testCase.hasArea {
+				t.Errorf("%#v got %.2f want %.2f", testCase.shape, got, testCase.hasArea)
+			}
+		})
 	}
 }
