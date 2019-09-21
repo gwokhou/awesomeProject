@@ -5,14 +5,28 @@ import (
 )
 
 func TestWallet(t *testing.T) {
-	wallet := Wallet{}
+	t.Run("Deposit", func(t *testing.T) {
+		wallet := Wallet{}
 
-	wallet.Deposit(BitCoin(10))
+		wallet.Deposit(BitCoin(10))
 
-	got := wallet.Balance()
-	want := BitCoin(10)
+		got := wallet.Balance()
+		want := BitCoin(10)
 
-	if got != want {
-		t.Errorf("got %s want %s", got, want)
-	}
+		if got != want {
+			t.Errorf("got %s want %s", got, want)
+		}
+	})
+
+	t.Run("Withdraw", func(t *testing.T) {
+		wallet := Wallet{}
+		wallet.Withdraw(10)
+
+		got := wallet.Balance()
+		want := BitCoin(10)
+
+		if got != want {
+			t.Errorf("got %s want %s", got, want)
+		}
+	})
 }
