@@ -16,6 +16,10 @@ func (w *Wallet) Balance() BitCoin {
 	return w.balance
 }
 
+func (w *Wallet) Withdraw(amount BitCoin) {
+	w.balance -= amount
+}
+
 func (b BitCoin) String() string {
 	return fmt.Sprintf("%d BTC", b)
 }
