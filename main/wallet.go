@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
+
+var InsufficientFundsError = errors.New("cannot withdraw, insufficient funds")
 
 type BitCoin int
 
@@ -16,8 +21,12 @@ func (w *Wallet) Balance() BitCoin {
 	return w.balance
 }
 
-func (w *Wallet) Withdraw(amount BitCoin) {
+func (w *Wallet) Withdraw(amount BitCoin) error {
+	if amount > w.balance {
+		return InsufficientFundsError
+	}
 	w.balance -= amount
+	return nil
 }
 
 func (b BitCoin) String() string {
