@@ -60,9 +60,18 @@ func TestUpdate(t *testing.T) {
 	})
 }
 
+func TestDelete(t *testing.T) {
+	dictionary := Dictionary{word: definition}
+	dictionary.Delete(word)
+
+	_, err := dictionary.Search(word)
+	if err != ErrNotFound {
+		t.Errorf("Expected '%s' to be deleted", word)
+	}
+}
+
 func assertStrings(t *testing.T, got, want string) {
 	t.Helper()
-
 	if got != want {
 		t.Errorf("got '%s' want '%s'", got, want)
 	}
@@ -70,7 +79,6 @@ func assertStrings(t *testing.T, got, want string) {
 
 func assertError(t *testing.T, got, want error) {
 	t.Helper()
-
 	if got != want {
 		t.Errorf("got error '%s' want '%s'", got, want)
 	}
@@ -78,13 +86,10 @@ func assertError(t *testing.T, got, want error) {
 
 func assertDefinition(t *testing.T, dictionary Dictionary, word, definition string) {
 	t.Helper()
-
 	got, err := dictionary.Search(word)
-
 	if err != nil {
 		t.Fatal("should find added word:", err)
 	}
-
 	if got != definition {
 		t.Errorf("got '%s' want '%s'", got, definition)
 	}
