@@ -2,9 +2,10 @@ package main
 
 import "testing"
 
+const k = "test"
+const v = "this is just a test"
+
 func TestSearch(t *testing.T) {
-	const k = "test"
-	const v = "this is just a test"
 	dictionary := Dictionary{k: v}
 
 	t.Run("known word", func(t *testing.T) {
@@ -19,6 +20,21 @@ func TestSearch(t *testing.T) {
 
 		assertError(t, err, ErrNotFound)
 	})
+}
+
+func TestAdd(t *testing.T) {
+	dictionary := Dictionary{}
+	dictionary.Add(k, v)
+	want := v
+	got, err := dictionary.Search(k)
+
+	if err != nil {
+		t.Fatal("should find added word:", err)
+	}
+
+	if want != got {
+		t.Errorf("got '%s' want '%s'", got, want)
+	}
 }
 
 func assertStrings(t *testing.T, got, want string) {
