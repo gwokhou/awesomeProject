@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"os"
 	"time"
 )
 
@@ -32,7 +31,7 @@ func Countdown(writer io.Writer, sleeper Sleeper) {
 }
 
 // 将Sleeper作为依赖，注入到Countdown中。
-func main() {
-	sleeper := &ConfigurableSleeper{1 * time.Second}
-	Countdown(os.Stdout, sleeper)
-}
+//func main() {
+//	sleeper := &ConfigurableSleeper{1 * time.Second}
+//	Countdown(os.Stdout, sleeper)
+//}
